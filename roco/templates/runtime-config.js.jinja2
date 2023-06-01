@@ -1,0 +1,20 @@
+window.__PAPERMERGE_RUNTIME_CONFIG__ = {
+  oauth2: {
+    internal_token_url: '{{ internal_token_url }}',
+    redirect_uri: '{{ redirect_uri }}',
+    {% if google_client_id %}
+    google: {
+      client_id: '{{ google_client_id }}',
+      authorize_url: '{{ google_authorize_url }}',
+      scope: 'openid email',
+    },
+    {% endif %}
+    {% if github_client_id %}
+    github: {
+      client_id: '{{ github_client_id }}',
+      authorize_url: '{{ github_authorize_url }}',
+      scope: 'openid email',
+    }
+    {% endif %}
+  }
+}
