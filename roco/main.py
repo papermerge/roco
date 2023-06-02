@@ -22,4 +22,5 @@ def get_template():
 def generate_runtime_config() -> str:
     template = get_template()
     settings = get_settings()
+
     return template.render(settings)

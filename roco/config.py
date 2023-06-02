@@ -1,4 +1,4 @@
-from pydantic import BaseSettings, HttpUrl, validator
+from pydantic import BaseSettings, root_validator, validator
 
 
 class Settings(BaseSettings):
@@ -28,6 +28,23 @@ class Settings(BaseSettings):
             return True
 
         return False
+
+    @root_validator
+    def check_google_params(cls, values):
+        two_values = [
+            values.get('google_client_id'),
+            values.get('google_authorize_url')
+        ]
+        count = len([v for v in two_values if v])
+
+        if count not in (0, 2):
+            raise ValueError(
+                'google_client_id and google_authorize_url should be'
+                ' either both absent or both present'
+            )
+
+        return values
+
 
     class Config:
         env_prefix = 'PAPERMERGE__AUTH__'
