@@ -67,7 +67,3 @@ def test_both_of_the_google_oauth2_fields_is_present():
     assert "some-google-url" in result
     assert "some-google-client-id" in result
 
-
-
-
-

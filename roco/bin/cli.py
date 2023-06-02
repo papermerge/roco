@@ -14,7 +14,7 @@ from roco.config import get_settings
     show_default=True,
     help="echo current settings"
 )
-def cli(settings: bool):
+def run(settings: bool):
     if settings:
         se = get_settings()
         click.echo(f"prefix = {se.Config.env_prefix}")
@@ -26,4 +26,4 @@ def cli(settings: bool):
 
 
 if __name__ == "__main__":
-    cli()
+    run()
