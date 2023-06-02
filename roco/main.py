@@ -1,6 +1,7 @@
 import pathlib
 from jinja2 import Environment, PackageLoader, select_autoescape
 
+from .config import get_settings
 
 env = Environment(
     loader=PackageLoader("roco"),
@@ -18,19 +19,7 @@ def get_template():
     )
 
 
-def get_context():
-    """Builds context dictionary from environment variables"""
-
-    return dict(
-        internal_token_url="one",
-        redirect_uri="two",
-        google_client_id="abc",
-        google_authorize_url="123"
-    )
-
-
 def generate_runtime_config() -> str:
     template = get_template()
-    context = get_context()
-
-    return template.render(context)
+    settings = get_settings()
+    return template.render(settings)
