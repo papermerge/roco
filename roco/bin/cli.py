@@ -1,20 +1,15 @@
 import sys
-import click
+import typer
 
 from roco.main import generate_runtime_config
 from roco.config import get_settings
 
 
-@click.command()
-@click.option(
-    '-s',
-    '--settings',
-    is_flag=True,
-    default=False,
-    show_default=True,
-    help="echo current settings"
-)
-def run(settings: bool):
+app = typer.Typer()
+
+
+@app.command()
+def run(settings: bool = False):
     if settings:
         se = get_settings()
         click.echo(f"prefix = {se.Config.env_prefix}")
@@ -22,8 +17,8 @@ def run(settings: bool):
         sys.exit(0)
 
     output = generate_runtime_config()
-    click.echo(output)
+    print(output)
 
 
 if __name__ == "__main__":
-    run()
+    app()

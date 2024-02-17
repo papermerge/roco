@@ -80,3 +80,20 @@ def test_both_of_the_google_oauth2_fields_is_present(provider):
     assert "some-google-url" in result
     assert "some-google-client-id" in result
     assert "abc/callback" in result
+
+
+def test_login_provider_is_ldap():
+    """
+    In this scenario env variable PAPERMERGE__AUTH__LDAP_URL is defined and
+    has a non empty value. It is expected that generated template will
+    contain "login_provider: 'ldap'"
+    """
+    reset_env()
+
+    os.environ[
+        f"PAPERMERGE__AUTH__LDAP_URL"
+    ] = 'ldap.trusel.net'
+
+    result = generate_runtime_config()
+
+    assert "login_provider: 'ldap'" in result

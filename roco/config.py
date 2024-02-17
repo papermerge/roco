@@ -1,7 +1,12 @@
-from pydantic import BaseSettings, root_validator
+import os
+from typing import Literal
+from typing_extensions import Self
+from pydantic import model_validator, field_validator, ConfigDict
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    model_config = ConfigDict(env_prefix='PAPERMERGE__AUTH__')
 
     google_client_id: str | None = None
     google_authorize_url: str | None = None
@@ -13,12 +18,22 @@ class Settings(BaseSettings):
     github_redirect_uri: str | None = None
     github_scope: str = 'openid email'
 
-    @root_validator
-    def check_google_params(cls, values):
+    login_provider: Literal['db', 'ldap'] = 'db'
+
+    @field_validator('login_provider')
+    @classmethod
+    def db_or_ldap(cls, v: str) -> str:
+        if os.environ.get('PAPERMERGE__AUTH__LDAP_URL'):
+            return 'ldap'
+
+        return 'db'
+
+    @model_validator(mode='after')
+    def check_google_params(self):
         three_values = [
-            values.get('google_client_id'),
-            values.get('google_authorize_url'),
-            values.get('google_redirect_uri')
+            self.google_client_id,
+            self.google_authorize_url,
+            self.google_redirect_uri
         ]
         count = len([v for v in three_values if v])
 
@@ -28,14 +43,14 @@ class Settings(BaseSettings):
                 ' should be either all absent or all present'
             )
 
-        return values
+        return self
 
-    @root_validator
-    def check_github_params(cls, values):
+    @model_validator(mode='after')
+    def check_github_params(self):
         three_values = [
-            values.get('github_client_id'),
-            values.get('github_authorize_url'),
-            values.get('github_redirect_uri')
+            self.github_client_id,
+            self.github_authorize_url,
+            self.github_redirect_uri
         ]
         count = len([v for v in three_values if v])
 
@@ -45,10 +60,7 @@ class Settings(BaseSettings):
                 ' should be either all absent or all present'
             )
 
-        return values
-
-    class Config:
-        env_prefix = 'PAPERMERGE__AUTH__'
+        return self
 
 
 def get_settings():
