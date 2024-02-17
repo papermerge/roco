@@ -1,6 +1,7 @@
+import os
 from typing import Literal
 from typing_extensions import Self
-from pydantic import model_validator, ConfigDict
+from pydantic import model_validator, field_validator, ConfigDict
 from pydantic_settings import BaseSettings
 
 
@@ -18,6 +19,14 @@ class Settings(BaseSettings):
     github_scope: str = 'openid email'
 
     login_provider: Literal['db', 'ldap'] = 'db'
+
+    @field_validator('login_provider')
+    @classmethod
+    def db_or_ldap(cls, v: str) -> str:
+        if os.environ.get('PAPERMERGE__AUTH__LDAP_URL'):
+            return 'ldap'
+
+        return 'db'
 
     @model_validator(mode='after')
     def check_google_params(self):
