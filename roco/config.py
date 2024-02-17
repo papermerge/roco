@@ -1,10 +1,11 @@
 from typing import Literal
 from typing_extensions import Self
-from pydantic import model_validator
+from pydantic import model_validator, ConfigDict
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    model_config = ConfigDict(env_prefix='PAPERMERGE__AUTH__')
 
     google_client_id: str | None = None
     google_authorize_url: str | None = None
@@ -51,9 +52,6 @@ class Settings(BaseSettings):
             )
 
         return self
-
-    class Config:
-        env_prefix = 'PAPERMERGE__AUTH__'
 
 
 def get_settings():
