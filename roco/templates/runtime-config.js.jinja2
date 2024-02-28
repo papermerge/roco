@@ -18,4 +18,9 @@ window.__PAPERMERGE_RUNTIME_CONFIG__ = {
     {%- endif %}
   },
   login_provider: '{{ login_provider }}',
+  {%- if remote %}
+   remote_user: {
+      logout_endpoint: '{{ remote_logout_endpoint }}',
+   }
+  {%- endif %}
 };
