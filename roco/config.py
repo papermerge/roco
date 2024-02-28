@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     github_scope: str = 'openid email'
 
     login_provider: Literal['db', 'ldap'] = 'db'
+    remote: bool = False
+    remote_logout_endpoint: str | None = None
 
     @field_validator('login_provider')
     @classmethod

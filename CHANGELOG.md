@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0 - 2024-02-28
+- Add support for "remote_user: { logout_endpoint: ... }"
+
 ## 0.2.0 - 2024-02-17
 
 - Add support for "login_provider = db | ldap"
