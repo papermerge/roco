@@ -12,7 +12,7 @@ app = typer.Typer()
 def run(settings: bool = False):
     if settings:
         se = get_settings()
-        print(f"prefix = {se.Config.env_prefix}")
+        print(f"prefix = {se.model_config['env_prefix']}")
         print(se.dict())
         sys.exit(0)
 
