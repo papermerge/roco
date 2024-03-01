@@ -12,8 +12,8 @@ app = typer.Typer()
 def run(settings: bool = False):
     if settings:
         se = get_settings()
-        click.echo(f"prefix = {se.Config.env_prefix}")
-        click.echo(se.dict())
+        print(f"prefix = {se.model_config['env_prefix']}")
+        print(se.dict())
         sys.exit(0)
 
     output = generate_runtime_config()

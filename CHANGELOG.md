@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 0.4.0 - 2024-03-01
+
+- Add support for OIDC
+
 ## 0.3.0 - 2024-02-28
 - Add support for "remote_user: { logout_endpoint: ... }"
 
