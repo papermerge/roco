@@ -1,53 +1,51 @@
 import pytest
 import os
 
-from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 from roco.main import generate_runtime_config
 
 from .utils import reset_env
 
 
-@pytest.mark.parametrize("provider", ["google", "github"])
-def test_only_google_client_id_provided(provider):
+def test_oidc_client_id_provided():
     """
-    Either none or all `<provider>_client_id`, `<provider>_authorize_url`,
-    `<provider>_redirect_uri` should be supplied.
-    In this scenario only `<provider>_client_id` is provided -> validation
+    Either none or all `oidc_client_id`, `oidc_authorize_url`,
+    `oidc_redirect_uri` should be supplied.
+    In this scenario only `oidc_client_id` is provided -> validation
     error is expected
     """
     reset_env()
 
-    os.environ[f"PAPERMERGE__AUTH__{provider.upper()}_CLIENT_ID"] = "google123"
-    os.environ[f"PAPERMERGE__AUTH__{provider.upper()}_AUTHORIZE_URL"] = ''
-    os.environ[f"PAPERMERGE__AUTH__{provider.upper()}_REDIRECT_URI"] = ''
+    os.environ[f"PAPERMERGE__AUTH__OIDC_CLIENT_ID"] = "google123"
+    os.environ[f"PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL"] = ''
+    os.environ[f"PAPERMERGE__AUTH__OIDC_REDIRECT_URL"] = ''
 
     with pytest.raises(ValidationError):
         generate_runtime_config()
 
 
-@pytest.mark.parametrize("provider", ["google", "github"])
-def test_only_google_authorize_url_provided(provider):
+def test_only_oidc_authorize_url_provided():
     """
-    Either none or all `<provider>_client_id`, `<provider>_authorize_url`,
-    '<provider>_redirect_uri' should be supplied.
+    Either none or all `oidc_client_id`, `oidc_authorize_url`,
+    'oidc_redirect_uri' should be supplied.
     In this scenario only `authorize_url` is provided -> validation
     error is expected
     """
     reset_env()
 
     os.environ[
-        f"PAPERMERGE__AUTH__{provider.upper()}_AUTHORIZE_URL"
+        f"PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL"
     ] = "some-google-url"
-    os.environ[f"PAPERMERGE__AUTH__{provider.upper()}_CLIENT_ID"] = ''
-    os.environ[f"PAPERMERGE__AUTH__{provider.upper()}_REDIRECT_URI"] = ''
+    os.environ[f"PAPERMERGE__AUTH__OIDC_CLIENT_ID"] = ''
+    os.environ[f"PAPERMERGE__AUTH__OIDC_REDIRECT_URL"] = ''
 
     with pytest.raises(ValidationError):
         generate_runtime_config()
 
 
-def test_none_of_the_google_oauth2_fields_is_present():
+def test_none_of_the_oidc_fields_is_present():
     """
-    In scenario no <provider> oauth2 fields are present. Such scenario
+    In scenario no oidc fields are present. Such scenario
     is valid.
     """
     reset_env()
@@ -56,23 +54,22 @@ def test_none_of_the_google_oauth2_fields_is_present():
     assert "window" in result
 
 
-@pytest.mark.parametrize("provider", ["google", "github"])
-def test_both_of_the_google_oauth2_fields_is_present(provider):
+def test_all_of_the_oidc_fields_is_present():
     """
-    In this scenario all google oauth2 fields i.e.
-    `google_authorize_url`, `google_client_id`, ``google_redirect_uri`
+    In this scenario all oidc fields i.e.
+    `oidc_authorize_url`, `oidc_client_id`, ``oidc_redirect_url`
     are present. Such scenario is obviously valid.
     """
     reset_env()
 
     os.environ[
-        f"PAPERMERGE__AUTH__{provider.upper()}_AUTHORIZE_URL"
+        f"PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL"
     ] = 'some-google-url'
     os.environ[
-        f"PAPERMERGE__AUTH__{provider.upper()}_CLIENT_ID"
+        f"PAPERMERGE__AUTH__OIDC_CLIENT_ID"
     ] = 'some-google-client-id'
     os.environ[
-        f"PAPERMERGE__AUTH__{provider.upper()}_REDIRECT_URI"
+        f"PAPERMERGE__AUTH__OIDC_REDIRECT_URL"
     ] = "abc/callback"
 
     result = generate_runtime_config()

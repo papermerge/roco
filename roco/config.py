@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     oidc_client_id: str | None = None
     oidc_authorize_url: str | None = None
-    oidc_redirect_uri: str | None = None
+    oidc_redirect_url: str | None = None
     oidc_scope: str = 'openid email'
 
     login_provider: Literal['db', 'ldap'] = 'db'
@@ -29,7 +29,7 @@ class Settings(BaseSettings):
         three_values = [
             self.oidc_client_id,
             self.oidc_authorize_url,
-            self.oidc_redirect_uri
+            self.oidc_redirect_url
         ]
         count = len([v for v in three_values if v])
 

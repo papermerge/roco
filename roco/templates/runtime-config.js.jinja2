@@ -3,7 +3,7 @@ window.__PAPERMERGE_RUNTIME_CONFIG__ = {
     {%- if oidc_client_id %}
     client_id: '{{ oidc_client_id }}',
     authorize_url: '{{ oidc_authorize_url }}',
-    redirect_uri: '{{ oidc_redirect_uri }}',
+    redirect_uri: '{{ oidc_redirect_url }}',
     scope: '{{ oidc_scope }}',
   {%- endif %}
   },
