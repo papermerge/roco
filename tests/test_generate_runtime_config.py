@@ -71,6 +71,9 @@ def test_all_of_the_oidc_fields_is_present():
     os.environ[
         f"PAPERMERGE__AUTH__OIDC_REDIRECT_URL"
     ] = "abc/callback"
+    os.environ[
+        f"PAPERMERGE__AUTH__OIDC_LOGOUT_URL"
+    ] = "abc/logout-url"
 
     result = generate_runtime_config()
 
