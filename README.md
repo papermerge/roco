@@ -5,17 +5,19 @@ text generated from environment variables.
 
 For example, given following environment variables:
 
-    PAPERMERGE__AUTH__OIDC_CLIENT_ID=some-id.apps.googleusercontent.com
-    PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL=https://accounts.google.com/o/oauth2/auth
-    PAPERMERGE__AUTH__OIDC_REDIRECT_URL=http://localhost:11000/google/callback
+    PAPERMERGE__AUTH__OIDC_CLIENT_ID=papermerge
+    PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL=http://keycloak.trusel.net:8080/realms/myrealm/protocol/openid-connect/auth
+    PAPERMERGE__AUTH__OIDC_REDIRECT_URL=http://demo.trusel.net:12000/oidc/callback
+    PAPERMERGE__AUTH__OIDC_LOGOUT_URL=http://keycloak.trusel.net:8080/realms/myrealm/protocol/openid-connect/logout
 
 will result in the following text (valid javascript) as output:
 
     window.__PAPERMERGE_RUNTIME_CONFIG__ = {
       oidc: {
-          client_id: 'some-id.apps.googleusercontent.com',
-          authorize_url: 'https://accounts.google.com/o/oauth2/auth',
-          redirect_url: 'http://localhost:11000/google/callback',
+          client_id: 'papermerge',
+          authorize_url: 'http://keycloak.trusel.net:8080/realms/myrealm/protocol/openid-connect/auth',
+          redirect_url: 'http://demo.trusel.net:12000/oidc/callback',
+          logout_url: 'http://keycloak.trusel.net:8080/realms/myrealm/protocol/openid-connect/logout'
           scope: 'openid email',
       }
     };
