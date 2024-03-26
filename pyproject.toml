@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "roco"
-version = "0.4.1"
+version = "0.4.2"
 description = "Runtime Config Generator"
 authors = ["Eugen Ciur <eugen@papermerge.com>"]
 readme = "README.md"

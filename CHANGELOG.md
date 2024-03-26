@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2 - 2024-03-26
+
+- Add OIDC's `logout_url`
+
 ## 0.4.1 - 2024-03-02
 
 - Rename `redirect_uri` to `redirect_url`
