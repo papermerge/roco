@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     oidc_authorize_url: str | None = None
     oidc_redirect_url: str | None = None
     oidc_logout_url: str | None = None
-    oidc_post_logout_redirect_url: str | None = None
     oidc_scope: str = 'openid email'
 
     login_provider: Literal['db', 'ldap'] = 'db'

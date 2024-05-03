@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.4 - 2024-05-02
+
+- Remove OIDC's `oidc_post_logout_redirect_url` parameter
+
 ## 0.4.3 - 2024-05-02
 
 - Add OIDC's `oidc_post_logout_redirect_url` parameter
