@@ -1,46 +1,8 @@
-import pytest
 import os
 
-from pydantic import ValidationError
 from roco.main import generate_runtime_config
 
 from .utils import reset_env
-
-
-def test_oidc_client_id_provided():
-    """
-    Either none or all `oidc_client_id`, `oidc_authorize_url`,
-    `oidc_redirect_uri` should be supplied.
-    In this scenario only `oidc_client_id` is provided -> validation
-    error is expected
-    """
-    reset_env()
-
-    os.environ[f"PAPERMERGE__AUTH__OIDC_CLIENT_ID"] = "google123"
-    os.environ[f"PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL"] = ''
-    os.environ[f"PAPERMERGE__AUTH__OIDC_REDIRECT_URL"] = ''
-
-    with pytest.raises(ValidationError):
-        generate_runtime_config()
-
-
-def test_only_oidc_authorize_url_provided():
-    """
-    Either none or all `oidc_client_id`, `oidc_authorize_url`,
-    'oidc_redirect_uri' should be supplied.
-    In this scenario only `authorize_url` is provided -> validation
-    error is expected
-    """
-    reset_env()
-
-    os.environ[
-        f"PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL"
-    ] = "some-google-url"
-    os.environ[f"PAPERMERGE__AUTH__OIDC_CLIENT_ID"] = ''
-    os.environ[f"PAPERMERGE__AUTH__OIDC_REDIRECT_URL"] = ''
-
-    with pytest.raises(ValidationError):
-        generate_runtime_config()
 
 
 def test_none_of_the_oidc_fields_is_present():

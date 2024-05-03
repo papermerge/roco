@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "roco"
-version = "0.4.2"
+version = "0.4.3"
 description = "Runtime Config Generator"
 authors = ["Eugen Ciur <eugen@papermerge.com>"]
 readme = "README.md"
@@ -12,7 +12,6 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3"
 ]
-
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -1,6 +1,6 @@
 # Roco - Runtime config generator
 
-Command line utility tool which prints to the standard output javascript valid 
+Command line utility which prints to the standard output javascript valid 
 text generated from environment variables.
 
 For example, given following environment variables:
@@ -50,4 +50,6 @@ Roco reads from following environment variables:
 * `PAPERMERGE__AUTH__OIDC_AUTHORIZE_URL`
 * `PAPERMERGE__AUTH__OIDC_CLIENT_ID`
 * `PAPERMERGE__AUTH__OIDC_REDIRECT_URL`
-* `PAPERMERGE__AUTH__LDAP_URL`
+* `PAPERMERGE__AUTH__OIDC_LOGOUT_URL`
+* `PAPERMERGE__AUTH__OIDC_POST_LOGOUT_REDIRECT_URL`
+* `PAPERMERGE__AUTH__OIDC_SCOPE`
